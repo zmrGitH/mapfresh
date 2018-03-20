@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Map</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+    <style>
+        html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>var dojoConfig = {parseOnLoad: true};</script>
+    <script src="https://js.arcgis.com/3.23/"></script>
+    <script>
+        
+        var map;       
+        function init(){
+                require(["esri/map", "dojo/domReady!"], function(Map) {
+                    map = new Map("map", {
+                        basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+                        center: [114.30, 30.60], // longitude, latitude
+                        zoom: 12
+                    });
+                });
+        }
+        
+        function fresh(){
+                var long=parseFloat(document.getElementById("longitude").value.toString());
+                var lati=parseFloat(document.getElementById("latitude").value.toString());
+                var bm = document.getElementById("basemap").value;
+                 var zm = document.getElementById("txt_zoom").value
+                 map.setBasemap(bm);
+                 map.centerAndZoom([long,lati],zm);
+                }
+        
+    </script>
+  </head>
+
+  <body>
+      <input type="button" style="background:blue"  value="map"  onclick="init()"/>
+      <p>  
+        地图类型：
+                  <select id="basemap">
+                      <option type="topo">topo</option>
+                      <option type="satellite">satellite</option>
+                      <option type="streets">streets</option>
+                      <option type="oceans">oceans</option>
+                      <option type="osm">osm</option>
+                  </select>
+         经度: <input type="text" id="longitude" size="8">
+         纬度: <input type="text" id="latitude" size="8">
+         显示级别：<input type="text" id="txt_zoom" size="8"/>
+          <input type="button" style="background:red"  value="refresh"  onclick="fresh()"/>
+      </p>       
+          <div id="map">           
+          </div>
+      
+  </body>
+</html>
